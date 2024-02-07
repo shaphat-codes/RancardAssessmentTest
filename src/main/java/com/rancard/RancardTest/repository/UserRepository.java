@@ -1,0 +1,7 @@
+package com.rancard.RancardTest.repository;
+
+import com.rancard.RancardTest.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+}
