@@ -25,4 +25,7 @@ public class User {
     public User(Integer id) {
         this.id = id;
     }
+
+    public User(String johnDoe, int i, String s) {
+    }
 }
