@@ -28,8 +28,6 @@ public class TransactionServiceTest {
     @Mock
     private TransactionRepository transactionRepository;
 
-    // Other dependencies if any
-
     @Test
     public void testCreateTransaction_Success() {
         // Arrange
