@@ -10,4 +10,6 @@ public class RancardTestApplication {
 		SpringApplication.run(RancardTestApplication.class, args);
 	}
 
+
+
 }

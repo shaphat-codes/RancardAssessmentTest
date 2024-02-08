@@ -1,6 +1,6 @@
 FROM mysql:latest
 
-ENV MYSQL_ROOT_PASSWORD=12hashedpageS1.
+ENV MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
 ENV MYSQL_DATABASE=rancard
 
 RUN rm -rf /var/lib/mysql/*
