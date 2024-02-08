@@ -1,0 +1,5 @@
+TODO
+1. USE DTOs ---semi done
+2. use logging --- done
+3. exception handling
+4. unit testing

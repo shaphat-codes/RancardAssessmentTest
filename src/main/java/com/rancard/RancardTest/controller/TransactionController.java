@@ -1,5 +1,7 @@
 package com.rancard.RancardTest.controller;
 
+import com.rancard.RancardTest.Exception.InvalidTransactionException;
+import com.rancard.RancardTest.Exception.TransactionNotFoundException;
 import com.rancard.RancardTest.entity.Transaction;
 import com.rancard.RancardTest.entity.User;
 import com.rancard.RancardTest.service.TransactionService;
@@ -18,9 +20,12 @@ public class TransactionController {
 
     @PostMapping("/create")
     public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction){
-        Transaction createdTransaction = transactionService.createTransaction(transaction);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
+        try {
+            Transaction createdTransaction = transactionService.createTransaction(transaction);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
+        } catch (InvalidTransactionException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping
@@ -29,21 +34,34 @@ public class TransactionController {
     }
 
     @GetMapping("/get")
-    public Transaction getTransaction(@RequestParam Integer id){
-        return transactionService.getTransaction(id);
+    public ResponseEntity<Transaction> getTransaction(@RequestParam Integer id) {
+        try {
+            Transaction transaction = transactionService.getTransaction(id);
+            return ResponseEntity.ok(transaction);
+        } catch (TransactionNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Integer id, @RequestBody Transaction transaction){
-        Transaction updatedTransaction = transactionService.updateTransaction(id, transaction);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(updatedTransaction);
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
+        try {
+            Transaction updatedTransaction = transactionService.updateTransaction(id, transaction);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedTransaction);
+        } catch (TransactionNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (InvalidTransactionException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id){
-        transactionService.deleteTransaction(id);
-
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Integer id) {
+        try {
+            transactionService.deleteTransaction(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (TransactionNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
