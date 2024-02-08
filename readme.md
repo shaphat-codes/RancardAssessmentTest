@@ -16,5 +16,3 @@ After setting up docker and docker-compose on your computer, use the command bel
 docker-compose up --build
 ```
 The development server should be up and running
-
-## TESTING
