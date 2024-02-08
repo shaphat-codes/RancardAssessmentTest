@@ -73,15 +73,12 @@ public class TransactionServiceTest {
         transaction.setSender(new User("John Doe", 30, "123 Main St"));
         transaction.setReceiver(new User("Jane Smith", 25, "456 Elm St"));
         transaction.setAmount(100.00);
-        transaction.setTransactionDate(new Date()); // Use current date/time
+        transaction.setTransactionDate(new Date());
 
-        // Mock behavior of the repository
         when(transactionRepository.findById(id)).thenReturn(Optional.of(transaction));
 
-        // Act
         transactionService.updateTransaction(id, transaction);
 
-        // Assert
         verify(transactionRepository).findById(id);
         verify(transactionRepository).save(transaction);
     }

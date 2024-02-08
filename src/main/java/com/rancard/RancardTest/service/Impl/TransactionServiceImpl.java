@@ -1,4 +1,7 @@
 package com.rancard.RancardTest.service.Impl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.rancard.RancardTest.Exception.InvalidTransactionException;
 import com.rancard.RancardTest.Exception.TransactionNotFoundException;
@@ -7,11 +10,8 @@ import com.rancard.RancardTest.repository.TransactionRepository;
 import com.rancard.RancardTest.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 @Slf4j
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -36,11 +36,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getTransaction() {
-        log.info("Fetching all transactions");
-        List<Transaction> transactions = transactionRepository.findAll();
-        log.info("Fetched {} transactions", transactions.size());
-        return transactions;
+    public Page<Transaction> getTransactions(int page, int size) {
+        log.info("Fetching transactions - Page: {}, Size: {}", page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
+        log.info("Fetched {} transactions", transactionsPage.getTotalElements());
+        return transactionsPage;
     }
     @Override
     public Transaction getTransaction(Integer id) {

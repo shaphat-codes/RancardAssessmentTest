@@ -6,6 +6,7 @@ import com.rancard.RancardTest.entity.Transaction;
 import com.rancard.RancardTest.entity.User;
 import com.rancard.RancardTest.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,11 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getUsers(){
-        return transactionService.getTransaction();
+    public ResponseEntity<Page<Transaction>> getTransactions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Transaction> transactionsPage = transactionService.getTransactions(page, size);
+        return ResponseEntity.ok(transactionsPage);
     }
 
     @GetMapping("/get")
