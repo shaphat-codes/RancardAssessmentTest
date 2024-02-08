@@ -7,7 +7,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    url: jdbc:mysql://localhost:3306/rancard
+    url: jdbc:mysql://mysql:3306/rancard
     password: 12hashedpageS1.
   jpa:
     hibernate:
