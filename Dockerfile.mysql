@@ -1,0 +1,5 @@
+FROM mysql:latest
+
+ENV MYSQL_ROOT_PASSWORD=12hashedpageS1.
+ENV MYSQL_DATABASE=rancard
+
